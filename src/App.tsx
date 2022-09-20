@@ -2,6 +2,9 @@ import React, {MouseEvent, useState} from 'react';
 import './App.css';
 import {Button} from "./components/Button";
 import {Money} from "./Money";
+import {InputButton} from "./components/InputButton";
+import {Input} from "./components/Input";
+import {ButtonForInput} from "./components/ButtonForInput";
 
 export type FilterType = "all" | "RUBLS" | 'Dollars'
 export type MoneyType = {
@@ -59,33 +62,66 @@ function App() {
     }*/
 
 
-    const [money, setMoney] = useState<Array<MoneyType>>([
-        {banknots: 'Dollars', value: 100, number: ' a1234567890'},
-        {banknots: 'Dollars', value: 50, number: ' z1234567890'},
-        {banknots: 'RUBLS', value: 100, number: ' w1234567890'},
-        {banknots: 'Dollars', value: 100, number: ' e1234567890'},
-        {banknots: 'Dollars', value: 50, number: ' c1234567890'},
-        {banknots: 'RUBLS', value: 100, number: ' r1234567890'},
-        {banknots: 'Dollars', value: 50, number: ' x1234567890'},
-        {banknots: 'RUBLS', value: 50, number: ' v1234567890'},
+    /*    const [money, setMoney] = useState<Array<MoneyType>>([
+            {banknots: 'Dollars', value: 100, number: ' a1234567890'},
+            {banknots: 'Dollars', value: 50, number: ' z1234567890'},
+            {banknots: 'RUBLS', value: 100, number: ' w1234567890'},
+            {banknots: 'Dollars', value: 100, number: ' e1234567890'},
+            {banknots: 'Dollars', value: 50, number: ' c1234567890'},
+            {banknots: 'RUBLS', value: 100, number: ' r1234567890'},
+            {banknots: 'Dollars', value: 50, number: ' x1234567890'},
+            {banknots: 'RUBLS', value: 50, number: ' v1234567890'},
+        ])
+
+        const [filter, setFilter] = useState<FilterType>("all")
+
+        let currentMoney = money
+        if (filter === "RUBLS") {
+            currentMoney = money.filter((filteredMoney) => filteredMoney.banknots === "RUBLS")
+        }
+        if (filter === 'Dollars') {
+            currentMoney = money.filter((filteredMoney) => filteredMoney.banknots === 'Dollars')
+        }
+
+        const onclickFilterHandler = (buttonValue: FilterType) => {
+            setFilter(buttonValue)
+        }*/
+
+    let [message, setMessage] = useState([
+        {message: 'message1'},
+        {message: 'message2'},
+        {message: 'message3'},
     ])
 
-    const [filter, setFilter] = useState<FilterType>("all")
+    let [text, setText] = useState('')
 
-    let currentMoney = money
-    if (filter === "RUBLS") {
-        currentMoney = money.filter((filteredMoney) => filteredMoney.banknots === "RUBLS")
-    }
-    if (filter === 'Dollars') {
-        currentMoney = money.filter((filteredMoney) => filteredMoney.banknots === 'Dollars')
+    const addText = (text: string) => {
+        let newMessage = {message: text}
+        setMessage([newMessage, ...message])
     }
 
-    const onclickFilterHandler = (buttonValue: FilterType) => {
-        setFilter(buttonValue)
+    const buttonHandler = () => {
+        addText(text)
+        setText("")
     }
+
 
     return (
         <>
+            {/* <div>
+                <input/>
+                <button>+</button>
+            </div>*/}
+            {/*<InputButton addText={addText}/>*/}
+
+            <Input text={text} setText={setText}/>
+            <ButtonForInput name={"+"} callback={buttonHandler}/>
+
+            {message.map((mes, index) => {
+                return (
+                    <div key={index}>{mes.message}</div>
+                )
+            })}
 
             {/*<button onClick={foo1}>1</button>
             <button onClick={() => foo2(100200)}>2</button>*/}
@@ -102,7 +138,10 @@ function App() {
             <button onClick={onAddHandler}>add 1</button>
             <button onClick={onResetHandler}>reset</button>*/}
 
+            {/*
             <Money currentMoney={currentMoney} onclickFilterHandler={onclickFilterHandler}/>
+*/}
+
 
         </>
     );
